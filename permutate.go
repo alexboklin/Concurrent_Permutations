@@ -15,7 +15,6 @@ func rotateHelper(src []int, dest [][]int, counter int) [][]int {
 }
 
 func main() {
-	/*rotate [1,2,3,4]
-	--[[1,2,3,4],[2,3,4,1],[3,4,1,2],[4,1,2,3]]*/
+	// *rotate [1,2,3,4] gives [[1,2,3,4],[2,3,4,1],[3,4,1,2],[4,1,2,3]]
 	fmt.Println(rotate([]int{1, 2, 3, 4}))
 }

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"sync"
 )
 
 /*
@@ -33,56 +34,35 @@ func permTail(input []int) [][]int {
 	return result
 }
 
-func worker(head int, headIndex int, input []int, output chan<- []int) {
-	//	fmt.Println("head: ", head, "input: ", input)
-
-	tmp := make([]int, len(input))
-	copy(tmp, input)
-
-	sliceWithout := append(tmp[:headIndex], tmp[headIndex+1:]...)
-	//	fmt.Println("without: ", sliceWithout)
-	newSlice := append([]int{head}, sliceWithout...)
-	//	fmt.Println("new: ", newSlice)
-	//	fmt.Println()
-
-	for _, permElement := range permTail(newSlice) {
-//		fmt.Println("permElement: ", permElement)
-		output <- permElement
-	}
-
-	if headIndex == len(input)-1 {
-		close(output)
-	}
-
-}
-
 func main() {
+	var wg sync.WaitGroup
+
 	testInput := []int{1, 2, 3, 4}
 
 	results := make(chan []int, 4)
 
-	//	fmt.Println("rotate [1,2,3,4]: ", rotate(testInput))
-	//	fmt.Println("permTail [1,2,3,4]: ", permTail(testInput))
-
 	for i, currentHead := range testInput {
-		/*		tmp := make([]int, len(testInput))
-				copy(tmp, testInput)
+		wg.Add(1)
+		go func(head int, headIndex int, input []int, output chan<- []int){
+			defer wg.Done()
 
-				fmt.Println(currentHead)
-				sliceWithout := append(tmp[:i], tmp[i+1:]...)
-				fmt.Println("without: ", sliceWithout)
-				newSlice := append([]int{currentHead}, sliceWithout...)
-				fmt.Println("new: ", newSlice)
+			tmp := make([]int, len(input))
+			copy(tmp, input)
 
-				fmt.Println()*/
+			sliceWithout := append(tmp[:headIndex], tmp[headIndex+1:]...)
+			newSlice := append([]int{head}, sliceWithout...)
 
-		go worker(currentHead, i, testInput, results)
+			for _, permElement := range permTail(newSlice) {
+				output <- permElement
+			}
+		}(currentHead, i, testInput, results)
 	}
 
-	//	<-results
+	go func() {
+		for elem := range results {
+			fmt.Println(elem)
+		}
+	}()
 
-	for elem := range results {
-		fmt.Println(elem)
-	}
-
+	wg.Wait()
 }

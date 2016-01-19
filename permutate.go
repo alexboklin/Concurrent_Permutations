@@ -26,8 +26,8 @@ permTail [1,2,3,4] gives [[1,2,3,4],[1,3,4,2],[1,4,2,3]]
 */
 func permTail(input []int) [][]int {
 	result := make([][]int, 0, len(input[1:]))
-	for _, tailRrotation := range rotate(input[1:]) {
-		result = append(result, append([]int{input[0]}, tailRrotation...))
+	for _, tailRotation := range rotate(input[1:]) {
+		result = append(result, append([]int{input[0]}, tailRotation...))
 
 	}
 	return result

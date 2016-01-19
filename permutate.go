@@ -6,12 +6,12 @@ func rotate(input []int) [][]int {
 	return rotateHelper(input, [][]int{}, 0)
 }
 
-func rotateHelper(src []int, dest [][]int, counter int) [][]int {
-	if counter == len(src) {
+func rotateHelper(src []int, dest [][]int, accumulator int) [][]int {
+	if accumulator == len(src) {
 		return dest
 	}
 	return rotateHelper(append(src[1:len(src)], []int{src[0]}...),
-		append(dest, [][]int{src}...), counter+1)
+		append(dest, [][]int{src}...), accumulator+1)
 }
 
 func main() {

@@ -3,19 +3,26 @@ package main
 import (
 	. "concurrent_permutations/helpers"
 	"fmt"
+	"os"
+	"strconv"
 	"sync"
 )
 
 func main() {
-	var wg sync.WaitGroup
+	input := os.Args[1:]
+	nums := make([]int, 0, len(input))
+	for _, num := range input {
+		convertedNum, _ := strconv.Atoi(num)
+		nums = append(nums, convertedNum)
+	}
 
-	testInput := []int{1, 2, 3, 4}
+	var wg sync.WaitGroup
 
 	results := make(chan []int, 4)
 
-	wg.Add(len(testInput))
+	wg.Add(len(nums))
 
-	for i, currentHead := range testInput {
+	for i, currentHead := range nums {
 
 		go func(head int, headIndex int, input []int, output chan<- []int) {
 			defer wg.Done()
@@ -29,7 +36,7 @@ func main() {
 			for _, permElement := range PermTail(newSlice) {
 				output <- permElement
 			}
-		}(currentHead, i, testInput, results)
+		}(currentHead, i, nums, results)
 	}
 
 	go func() {

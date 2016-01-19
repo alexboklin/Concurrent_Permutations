@@ -1,4 +1,4 @@
-package main
+package Concurrent_Permutations
 
 import (
 	"fmt"
@@ -41,8 +41,10 @@ func main() {
 
 	results := make(chan []int, 4)
 
+	wg.Add(len(testInput))
+
 	for i, currentHead := range testInput {
-		wg.Add(1)
+
 		go func(head int, headIndex int, input []int, output chan<- []int){
 			defer wg.Done()
 

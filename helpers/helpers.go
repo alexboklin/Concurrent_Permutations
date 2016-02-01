@@ -28,3 +28,16 @@ func PermTail(input []int) [][]int {
 	}
 	return result
 }
+
+/*-- layer 0 [1,2,3,4]: [[1,2,3,4],[2,3,4,1],[3,4,1,2],[4,1,2,3]], like rotate
+-- layer 1 [1,2,3,4]: [[1,2,3,4],[1,3,4,2],[1,4,2,3]]
+-- layer 2 [1,2,3,4]: [[1,2,3,4],[1,2,4,3]]
+layer n lst = [  take n lst ++ x | x <- rotate $ drop n lst ]*/
+//func Layer(input []int, rotateAfter int) [][]int{
+//	result := make([][]int, 0, len(input[rotateAfter:]))
+//	for _, element := range Rotate( input[rotateAfter:]){
+//		result = append(result, append(input[:rotateAfter],element...))
+//	}
+//	return result
+//}
+

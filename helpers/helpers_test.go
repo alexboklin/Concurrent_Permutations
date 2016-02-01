@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+//	"fmt"
 )
 
 func TestPermTail(t *testing.T) {
@@ -45,4 +46,10 @@ func TestLayer(t *testing.T) {
 		[]int{1, 2, 4, 3},
 	}, Layer([]int{1, 2, 3, 4}, 2))
 
+}
+
+func TestLayerize(t *testing.T){
+	assert.EqualValues(t, 24,len(Layerize([]int{1, 2, 3, 4})))
+//	assert.EqualValues(t, 120,len(Layerize([]int{1, 2, 3, 4, 5})))
+//	assert.EqualValues(t, 720,len(Layerize([]int{1, 2, 3, 4, 5 ,6})))
 }

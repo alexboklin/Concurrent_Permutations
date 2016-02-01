@@ -1,5 +1,7 @@
 package helpers
 
+import "fmt"
+
 /*
 rotate constructs "rotations" of a list. For instance,
 rotate [1,2,3,4] gives [[1,2,3,4],[2,3,4,1],[3,4,1,2],[4,1,2,3]]
@@ -8,12 +10,12 @@ func Rotate(input []int) [][]int {
 	return RotateHelper(input, [][]int{}, 0)
 }
 
-func RotateHelper(src []int, dest [][]int, accumulator int) [][]int {
-	if accumulator == len(src) {
-		return dest
+func RotateHelper(src []int, dst [][]int, acc int) [][]int {
+	if acc == len(src) {
+		return dst
 	}
 	return RotateHelper(append(src[1:len(src)], []int{src[0]}...),
-		append(dest, [][]int{src}...), accumulator+1)
+		append(dst, [][]int{src}...), acc+1)
 }
 
 /*
@@ -43,4 +45,39 @@ func Layer(input []int, rotateAfter int) [][]int {
 		result = append(result, temp)
 	}
 	return result
+}
+
+/*-- Formula: map $ layer n + 1 $ layer n element from rotate input
+-- Condition: length input - 2 > 1, only one rotation for the last element
+
+layerize lst = layerize' (layer 0 lst) 1 where
+	layerize' src counter
+		| length lst - counter == 1 = src
+		| otherwise = layerize' (concat $ map (layer counter) $ src) (counter + 1)*/
+
+func Layerize(src []int) [][]int {
+
+	// layer 0 [1,2,3,4]
+	currentResult := Layer(src, 0)
+	fmt.Println(currentResult)
+
+	// concat $ map (layer 1) $ layer 0 [1,2,3,4]
+	newResult := [][]int{}
+	for _, element := range currentResult {
+		newResult = append(newResult, Layer(element, 1)...)
+
+	}
+	fmt.Println(newResult)
+
+	//concat $ map (layer 2) $ concat $ map (layer 1) $ layer 0 [1,2,3,4]
+	currentResult = newResult
+	newResult = [][]int{}
+	for _, element := range currentResult {
+		newResult = append(newResult, Layer(element, 2)...)
+
+	}
+	fmt.Println(newResult)
+
+	currentResult = newResult
+	return currentResult
 }

@@ -50,6 +50,6 @@ func TestLayer(t *testing.T) {
 
 func TestLayerize(t *testing.T){
 	assert.EqualValues(t, 24,len(Layerize([]int{1, 2, 3, 4})))
-//	assert.EqualValues(t, 120,len(Layerize([]int{1, 2, 3, 4, 5})))
-//	assert.EqualValues(t, 720,len(Layerize([]int{1, 2, 3, 4, 5 ,6})))
+	assert.EqualValues(t, 120,len(Layerize([]int{1, 2, 3, 4, 5})))
+	assert.EqualValues(t, 720,len(Layerize([]int{1, 2, 3, 4, 5 ,6})))
 }

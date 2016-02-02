@@ -1,6 +1,6 @@
 package helpers
 
-import "fmt"
+//import "fmt"
 
 /*
 rotate constructs "rotations" of a list. For instance,
@@ -56,28 +56,18 @@ layerize lst = layerize' (layer 0 lst) 1 where
 		| otherwise = layerize' (concat $ map (layer counter) $ src) (counter + 1)*/
 
 func Layerize(src []int) [][]int {
-
-	// layer 0 [1,2,3,4]
 	currentResult := Layer(src, 0)
-	fmt.Println(currentResult)
-
-	// concat $ map (layer 1) $ layer 0 [1,2,3,4]
 	newResult := [][]int{}
-	for _, element := range currentResult {
-		newResult = append(newResult, Layer(element, 1)...)
+	for i := 1; len(src)-i > 1; i++ {
+		newResult = [][]int{}
+		for _, element := range currentResult {
+			// TODO: run Layer() for each element concurrently
+			newResult = append(newResult, Layer(element, i)...)
 
+		}
+		currentResult = newResult
 	}
-	fmt.Println(newResult)
 
-	//concat $ map (layer 2) $ concat $ map (layer 1) $ layer 0 [1,2,3,4]
-	currentResult = newResult
-	newResult = [][]int{}
-	for _, element := range currentResult {
-		newResult = append(newResult, Layer(element, 2)...)
-
-	}
-	fmt.Println(newResult)
-
-	currentResult = newResult
+	//	fmt.Println(currentResult)
 	return currentResult
 }

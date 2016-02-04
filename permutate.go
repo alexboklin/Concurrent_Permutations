@@ -1,7 +1,7 @@
 package main
 
 import (
-	. "concurrent_permutations/helpers"
+	. "go-permutations/helpers"
 	"fmt"
 	"os"
 	"strconv"

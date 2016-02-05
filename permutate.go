@@ -1,11 +1,11 @@
 package main
 
 import (
-	. "go-permutations/helpers"
 	"fmt"
+	. "go-permutations/helpers"
 	"os"
 	"strconv"
-	"sync"
+	//	"sync"
 )
 
 func main() {
@@ -16,34 +16,39 @@ func main() {
 		nums = append(nums, convertedNum)
 	}
 
-	var wg sync.WaitGroup
+	result := Permute(nums)
 
-	results := make(chan []int, 4)
+	fmt.Println("Total number of permutations: ", len(result))
+	fmt.Println("Permutations: ", result)
 
-	wg.Add(len(nums))
-
-	for i, currentHead := range nums {
-
-		go func(head int, headIndex int, input []int, output chan<- []int) {
-			defer wg.Done()
-
-			tmp := make([]int, len(input))
-			copy(tmp, input)
-
-			sliceWithout := append(tmp[:headIndex], tmp[headIndex+1:]...)
-			newSlice := append([]int{head}, sliceWithout...)
-
-			for _, permElement := range PermTail(newSlice) {
-				output <- permElement
-			}
-		}(currentHead, i, nums, results)
-	}
-
-	go func() {
-		for elem := range results {
-			fmt.Println(elem)
-		}
-	}()
-
-	wg.Wait()
+	//	var wg sync.WaitGroup
+	//
+	//	results := make(chan []int, 4)
+	//
+	//	wg.Add(len(nums))
+	//
+	//	for i, currentHead := range nums {
+	//
+	//		go func(head int, headIndex int, input []int, output chan<- []int) {
+	//			defer wg.Done()
+	//
+	//			tmp := make([]int, len(input))
+	//			copy(tmp, input)
+	//
+	//			sliceWithout := append(tmp[:headIndex], tmp[headIndex+1:]...)
+	//			newSlice := append([]int{head}, sliceWithout...)
+	//
+	//			for _, permElement := range PermTail(newSlice) {
+	//				output <- permElement
+	//			}
+	//		}(currentHead, i, nums, results)
+	//	}
+	//
+	//	go func() {
+	//		for elem := range results {
+	//			fmt.Println(elem)
+	//		}
+	//	}()
+	//
+	//	wg.Wait()
 }

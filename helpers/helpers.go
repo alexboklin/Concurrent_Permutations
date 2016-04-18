@@ -16,10 +16,12 @@ func rotateListHelper(src []int, dst [][]int, acc int) [][]int {
 		append(dst, [][]int{src}...), acc+1)
 }
 
-/*-- RotateTail [1,2,3,4] 0: [[1,2,3,4],[2,3,4,1],[3,4,1,2],[4,1,2,3]], like RotateList
--- RotateTail [1,2,3,4] 1: [[1,2,3,4],[1,3,4,2],[1,4,2,3]]
--- RotateTail [1,2,3,4] 2: [[1,2,3,4],[1,2,4,3]]*/
-func RotateTail(input []int, rotateAfter int) [][]int {
+/*
+RotateTailAfterElem [1,2,3,4] 0: [[1,2,3,4],[2,3,4,1],[3,4,1,2],[4,1,2,3]], like RotateList
+RotateTailAfterElem [1,2,3,4] 1: [[1,2,3,4],[1,3,4,2],[1,4,2,3]]
+RotateTailAfterElem [1,2,3,4] 2: [[1,2,3,4],[1,2,4,3]]
+*/
+func RotateTailAfterElem(input []int, rotateAfter int) [][]int {
 	result := make([][]int, 0, len(input[rotateAfter:]))
 
 	for _, tailRotation := range RotateList(input[rotateAfter:]) {
@@ -31,17 +33,18 @@ func RotateTail(input []int, rotateAfter int) [][]int {
 	return result
 }
 
-/*-- Formula: map $ layer n + 1 $ layer n element from rotate input
--- Condition: length input - 2 > 1, only one rotation for the last element*/
-
+/*
+Haskell-syntax formula: map $ layer n + 1 $ layer n element from rotate input
+Condition: length input - 2 > 1, only one rotation for the last element
+*/
 func Permute(src []int) [][]int {
-	currentResult := RotateTail(src, 0)
+	currentResult := RotateTailAfterElem(src, 0)
 	newResult := [][]int{}
 	for i := 1; len(src)-i > 1; i++ {
 		newResult = [][]int{}
 		for _, element := range currentResult {
-			// TODO: run Layer() for each element concurrently
-			newResult = append(newResult, RotateTail(element, i)...)
+			// TODO: run RotateTailAfterElem() for each element concurrently
+			newResult = append(newResult, RotateTailAfterElem(element, i)...)
 
 		}
 		currentResult = newResult

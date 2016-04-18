@@ -15,24 +15,24 @@ func TestRotateList(t *testing.T) {
 	}, RotateList([]int{1, 2, 3, 4}))
 }
 
-func TestRotateTail(t *testing.T) {
+func TestRotateTailAfterElem(t *testing.T) {
 	assert.EqualValues(t, [][]int{
 		[]int{1, 2, 3, 4},
 		[]int{2, 3, 4, 1},
 		[]int{3, 4, 1, 2},
 		[]int{4, 1, 2, 3},
-	}, RotateTail([]int{1, 2, 3, 4}, 0))
+	}, RotateTailAfterElem([]int{1, 2, 3, 4}, 0))
 
 	assert.EqualValues(t, [][]int{
 		[]int{1, 2, 3, 4},
 		[]int{1, 3, 4, 2},
 		[]int{1, 4, 2, 3},
-	}, RotateTail([]int{1, 2, 3, 4}, 1))
+	}, RotateTailAfterElem([]int{1, 2, 3, 4}, 1))
 
 	assert.EqualValues(t, [][]int{
 		[]int{1, 2, 3, 4},
 		[]int{1, 2, 4, 3},
-	}, RotateTail([]int{1, 2, 3, 4}, 2))
+	}, RotateTailAfterElem([]int{1, 2, 3, 4}, 2))
 
 }
 

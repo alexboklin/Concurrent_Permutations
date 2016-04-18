@@ -41,3 +41,14 @@ func TestPermute(t *testing.T) {
 	assert.EqualValues(t, 120, len(Permute([]int{1, 2, 3, 4, 5})))
 	assert.EqualValues(t, 720, len(Permute([]int{1, 2, 3, 4, 5, 6})))
 }
+
+// Reference on writing benchmarks: http://dave.cheney.net/2013/06/30/how-to-write-benchmarks-in-go
+func benchmarkPermute(input []int, b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Permute(input)
+	}
+}
+
+func BenchmarkPermuteFourElems(b *testing.B) { benchmarkPermute([]int{1, 2, 3, 4}, b) }
+func BenchmarkPermuteFiveElems(b *testing.B) { benchmarkPermute([]int{1, 2, 3, 4, 5}, b) }
+func BenchmarkPermuteSixElems(b *testing.B)  { benchmarkPermute([]int{1, 2, 3, 4, 5, 6}, b) }

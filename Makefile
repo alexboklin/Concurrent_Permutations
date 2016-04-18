@@ -1,7 +1,10 @@
-all: test_unit build
+all: test_unit benchmark build
 
 build:
-	go build permutate.go
+	go build permute.go
 
 test_unit:
 	go test -cover -v ./...
+
+benchmark:
+	go test -bench=. ./...

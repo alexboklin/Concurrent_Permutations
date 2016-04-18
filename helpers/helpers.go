@@ -43,7 +43,6 @@ func Permute(src []int) [][]int {
 	for i := 1; len(src)-i > 1; i++ {
 		newResult = [][]int{}
 		for _, element := range currentResult {
-			// TODO: run RotateTailAfterElem() for each element concurrently
 			newResult = append(newResult, RotateTailAfterElem(element, i)...)
 
 		}
